@@ -38,10 +38,9 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        $currencies = $this->client->getCurrencies();
         $rates = $this->client->getExchangeRates();
-        $rub = $rates->rub;
-        $eur = $rates->eur;
 
-        return $this->render('index', compact('rub', 'eur'));
+        return $this->render('index', compact('currencies', 'rates'));
     }
 }

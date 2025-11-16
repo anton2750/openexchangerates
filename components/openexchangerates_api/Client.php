@@ -2,6 +2,7 @@
 
 namespace app\components\openexchangerates_api;
 
+use app\dto\CurrenciesDto;
 use app\dto\RatesDto;
 use app\interfaces\ExchangeRatesClientInterface;
 use yii\base\Exception;
@@ -97,8 +98,19 @@ class Client extends \yii\base\Component implements ExchangeRatesClientInterface
             throw new Exception('API Error: ' . $response['message']);
         }
 
-        $rates = $response['data']['rates'];
+        return new RatesDto($response['data']['rates']);
+    }
 
-        return new RatesDto($rates['RUB'], $rates['EUR']);
+    public function getCurrencies(): CurrenciesDto
+    {
+        $endpoint = 'api/currencies.json?app_id=' . $this->apiKey;
+        $response = $this->makeRequest('GET', $endpoint);
+
+
+        if (!$response['success']) {
+            throw new Exception('API Error: ' . $response['message']);
+        }
+
+        return new CurrenciesDto($response['data']);
     }
 }
