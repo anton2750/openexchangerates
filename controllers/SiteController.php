@@ -8,9 +8,7 @@ use yii\web\Controller;
 class SiteController extends Controller
 {
 
-    public function __construct($id, $module,
-        public ExchangeRatesClientInterface $client,
-        $config = [])
+    public function __construct($id, $module, public ExchangeRatesClientInterface $client, $config = [])
     {
         parent::__construct($id, $module, $config);
     }

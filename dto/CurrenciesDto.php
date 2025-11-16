@@ -13,10 +13,5 @@ readonly class CurrenciesDto
     {
         return $this->list[$code] ?? null;
     }
-
-    public function hasCurrency(string $code): bool
-    {
-        return isset($this->list[$code]);
-    }
 }
 
