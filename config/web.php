@@ -1,5 +1,8 @@
 <?php
 
+use app\interfaces\ExchangeRatesClientInterface;
+use yii\di\Instance;
+
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 
@@ -42,16 +45,27 @@ $config = [
             ],
         ],
         'db' => $db,
-        /*
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
             ],
         ],
-        */
+        'openechangerates' => [
+            'class' => \app\components\openexchangerates_api\Client::class,
+            'baseUrl' => 'https://openexchangerates.org/',
+            'apiKey' => getenv('API_KEY'),
+        ],
     ],
     'params' => $params,
+    'container' => [
+        'definitions' => [
+            \app\interfaces\ExchangeRatesClientInterface::class => function() {
+                return Yii::$app->get('openechangerates');
+            }
+//            \app\interfaces\ExchangeRatesClientInterface::class => Instance::of(\app\components\openexchangerates_api\MockClient::class),
+        ],
+    ],
 ];
 
 if (YII_ENV_DEV) {
