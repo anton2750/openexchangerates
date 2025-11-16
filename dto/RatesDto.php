@@ -8,5 +8,10 @@ readonly class RatesDto
         public array $list
     )
     {}
+
+    public function getRate(string $code): ?string
+    {
+        return $this->list[$code] ?? null;
+    }
 }
 

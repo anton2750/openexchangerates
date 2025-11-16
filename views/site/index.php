@@ -30,8 +30,8 @@ $this->title = 'My Yii Application';
             <?php foreach ($currencies->list as $code => $name): ?>
                 <tr>
                     <td><?= $code ?></td>
-                    <td><?= $name ?></td>
-                    <td><?= $rates->list[$code] ?? 'N/A' ?></td>
+                    <td><?= $currencies->getCurrencyName($code) ?></td>
+                    <td><?= $rates->getRate($code) ?? 'N/A' ?></td>
                 </tr>
             <?php endforeach ?>
             </tbody>
